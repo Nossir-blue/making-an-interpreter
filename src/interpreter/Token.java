@@ -15,10 +15,10 @@ public class Token {
 
     @Override
     public String toString() {
-        return "Token { type=" + type 
+        return "Token {\n type=" + type 
                 + "\n lexeme=" + lexeme
                 + "\n literal=" + literal 
-                + "\n}";
+                + "\n}\n";
     }
 
     
