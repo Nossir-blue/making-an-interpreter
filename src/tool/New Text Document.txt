@@ -1,2 +1,0 @@
-PS C:\Users\dell\Desktop\interpreter\interpreter>  c:; cd 'c:\Users\dell\Desktop\interpreter\interpreter'; & 'C:\Program Files\Java\jdk-23.0.1\bin\java.exe' '--enable-preview' '-XX:+ShowCodeDetailsInExceptionMessages' '-cp' 'C:\Users\dell\Desktop\interpreter\interpreter\bin' 'tool.GenerateAST'
-Usage: generate_ast <output directory>
