@@ -6,6 +6,8 @@ import static interpreter.TokenType.*;
 import java.util.List;
 
 public class Parser {
+    private static class ParseError extends RuntimeException{}
+
     private final List<Token> tokens;
     private int current = 0;
 
@@ -13,6 +15,13 @@ public class Parser {
         this.tokens = tokens;
     }
     
+    Expr parse(){
+        try{
+            return expression();
+        } catch (ParseError error) {
+            return null;
+        }
+    }
     private Expr expression(){
         return equality();
     }
@@ -73,7 +82,7 @@ public class Parser {
         return primary();
     }
 
-    private Expr primary(){
+    private Expr primary() {
         if(match(FALSE)) return new Expr.Literal(false);
         if(match(TRUE)) return new Expr.Literal(true);
         if(match(NIL)) return new Expr.Literal(null);
@@ -87,6 +96,8 @@ public class Parser {
             consume(RIGHT_PAREN, "Expect ')' after expression.");
             return new Expr.Grouping(expr);
         }
+
+        throw error(peek(), "Expect expression");
     }
 
     private Token consume(TokenType type, String message){
@@ -131,5 +142,27 @@ public class Parser {
     private ParseError error(Token token, String message){
         ErrorReporter.error(token, message);
         return new ParseError();
+    }
+
+    private void synchronize(){
+        advance();
+
+        while(!isAtEnd()){
+            if(previous().type == SEMICOLON) return;
+
+            switch(peek().type){
+                case CLASS:
+                case FUN:
+                case VAR:
+                case FOR:
+                case IF:
+                case WHILE:
+                case PRINT:
+                case RETURN:
+                    return;
+            }
+
+            advance();
+        }
     }
 }
