@@ -1,6 +1,5 @@
 package interpreter;
 
-
 import static interpreter.ErrorReporter.*;
 import static interpreter.TokenType.*;
 
@@ -127,5 +126,10 @@ public class Parser {
     
     private Token previous(){
         return tokens.get(current - 1);
+    }
+
+    private ParseError error(Token token, String message){
+        ErrorReporter.error(token, message);
+        return new ParseError();
     }
 }
