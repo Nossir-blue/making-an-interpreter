@@ -11,23 +11,23 @@ public class AstPrinter implements Expr.Visitor<String>{
     }
 
     @Override
-    public String visitBinaryExpr(Binary expr) {
+    public String visitBinaryExpr(Expr.Binary expr) {
         return parenthesize(expr.operator.lexeme, expr.left, expr.right);
     }
 
     @Override
-    public String visitGroupingExpr(Grouping expr) {
+    public String visitGroupingExpr(Expr.Grouping expr) {
         return parenthesize("group", expr.expression);
     }
 
     @Override
-    public String visitLiteralExpr(Literal expr) {
+    public String visitLiteralExpr(Expr.Literal expr) {
         if(expr.value == null) return "nil";
         return expr.value.toString();
     }
 
     @Override
-    public String visitUnaryExpr(Unary expr) {
+    public String visitUnaryExpr(Expr.Unary expr) {
         return parenthesize(expr.operator.lexeme, expr.right);
     }
 
@@ -43,4 +43,5 @@ public class AstPrinter implements Expr.Visitor<String>{
 
         return builder.toString();
     }
+
 }
